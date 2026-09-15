@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marks and Spencer Group plc - Official Digital Specification & Web Architecture</title>
+  <meta name="description" content="Quality, Value, Service, Innovation and Trust Since 1884 - Comprehensive Level 3 Educational Web Specification">
+  <style>
+    :root {
+      --primary: #004F32;
+      --secondary: #111827;
+      --text: #171717;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --muted: #64748b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header {
+      background: #0f172a;
+      color: #ffffff;
+      border-bottom: 3px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .top-bar {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+    .brand-badge {
+      font-size: 0.7rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      overflow-x: auto;
+    }
+    nav button {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      padding: 0.75rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    nav button:hover, nav button.active {
+      color: #ffffff;
+      border-bottom-color: var(--primary);
+      background: rgba(255,255,255,0.05);
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+    }
+    .page-section {
+      display: none;
+    }
+    .page-section.active {
+      display: block;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: white;
+      padding: 3.5rem 2rem;
+      border-radius: 1rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #334155;
+    }
+    .hero-tagline {
+      color: #38bdf8;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .hero h1 {
+      font-size: 2.25rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      font-weight: 800;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #cbd5e1;
+      max-width: 750px;
+      margin-bottom: 1.5rem;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .meta-item {
+      font-size: 0.85rem;
+    }
+    .meta-label {
+      color: #94a3b8;
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .meta-val {
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    }
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      color: #0f172a;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.375rem;
+      background: #f1f5f9;
+      color: #475569;
+      margin-bottom: 0.75rem;
+    }
+    .risk-critical { background: #fee2e2; color: #991b1b; }
+    .risk-high { background: #ffedd5; color: #9a3412; }
+    .risk-medium { background: #fef9c3; color: #854d0e; }
+    .code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      font-family: monospace;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      margin-top: 0.75rem;
+    }
+    .level3-note {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 0.75rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-size: 0.825rem;
+      color: #1e3a8a;
+      margin-top: 0.75rem;
+    }
+    .step-card {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 1.5rem;
+    }
+    .step-number {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 9999px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 1.5rem 2rem;
+      border-top: 1px solid #1e293b;
+      margin-top: 4rem;
+      font-size: 0.85rem;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .interactive-simulator {
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: 0.75rem;
+      padding: 1.75rem;
+      margin: 2rem 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 0.375rem;
+      margin-top: 0.25rem;
+      margin-bottom: 1rem;
+      font-family: inherit;
+    }
+    @media print {
+      header nav, .btn, .interactive-simulator { display: none !important; }
+      .page-section { display: block !important; margin-bottom: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header & Sticky Navigation -->
+  <header>
+    <div class="top-bar">
+      <div class="brand">
+        <span style="display:inline-block; width:12px; height:12px; border-radius:50%; background:var(--primary);"></span>
+        <span>Marks and Spencer Group plc</span>
+        <span class="brand-badge">UK Retail, Food, Clothing, Home & Financial Services</span>
+      </div>
+      <div style="font-size:0.8rem; color:#94a3b8;">
+        UK Level 3 Educational Web Portfolio
+      </div>
+    </div>
+    <nav id="nav">
+      <button class="active" onclick="switchPage('home')">Home</button>
+      <button onclick="switchPage('about')">About</button>
+      <button onclick="switchPage('services')">Services</button>
+      <button onclick="switchPage('architecture')">Web Architecture</button>
+      <button onclick="switchPage('security')">Security & Risks</button>
+      <button onclick="switchPage('reviews')">Reviews</button>
+      <button onclick="switchPage('sitemap')">Site Map</button>
+      <button onclick="switchPage('userflow')">User Flow</button>
+      <button onclick="switchPage('contact')">Contact</button>
+    </nav>
+  </header>
+
+  <div class="container">
+
+    <!-- PAGE 1: HOME -->
+    <section id="page-home" class="page-section active">
+      <div class="hero">
+        <div class="hero-tagline">Quality, Value, Service, Innovation and Trust Since 1884</div>
+        <h1>Iconic British Style, M&S Foodhall Quality & Omnichannel Shopping</h1>
+        <p>Explore responsibly sourced womenswear and menswear, reserve gourmet M&S Foodhall collections, unlock personalized Sparks loyalty rewards, and enjoy free Click & Collect across the United Kingdom.</p>
+        <div class="meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">Headquarters</span>
+            <span class="meta-val">Waterside House, 35 North Wharf Road, London W2 1NW</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Regulator</span>
+            <span class="meta-val">Competition and Markets Authority (CMA), Advertising Standards Authority (ASA) & Information Commissioner’s Office (ICO)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Statutory Basis</span>
+            <span class="meta-val">Board of Directors, Marks and Spencer Group plc, regulated by the Financial Conduct Authority (FCA for M&S Bank)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Founded</span>
+            <span class="meta-val">1884 (Founded by Michael Marks and Thomas Spencer in Leeds Kirkgate Market)</span>
+          </div>
+        </div>
+      </div>
+
+      <h2 style="font-size:1.5rem; margin-bottom:1rem;">Overview & Digital Strategy</h2>
+      <p style="font-size:1.05rem; color:#475569; margin-bottom:2rem;">Marks and Spencer (M&S) is one of the United Kingdom’s most iconic retailers, renowned for premium food halls, responsibly sourced fashion, stylish homeware, and M&S Bank. Its high-traffic omnichannel e-commerce platform processes tens of millions of retail orders annually, synchronising nationwide stock across 1,000+ British stores and automated distribution centres.</p>
+
+      <h3 style="font-size:1.25rem; margin-bottom:1rem;">Core Digital Services Preview</h3>
+      <div class="card-grid">
+        
+          <div class="card">
+            <span class="badge">E-Commerce Retail</span>
+            <h3>Online Fashion & Homeware Shopping</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Shop thousands of lines across womenswear, menswear, lingerie, childrenswear, and home furnishings with comprehensive size guides, video catwalk clips, and real customer fit ratings.</p>
+            <div style="font-size:0.8rem; color:#0f172a; font-weight:600;">Delivery: Next.js / React micro-frontends backed by headless commerce APIs, image optimization edge workers, and dynamic inventory queries.</div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Foodhall & Catering</span>
+            <h3>M&S Food to Order & Entertaining Collection</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Order bespoke celebration cakes, party platters, holiday turkeys, and artisan cheese boards online for designated collection slots at your local M&S Foodhall.</p>
+            <div style="font-size:0.8rem; color:#0f172a; font-weight:600;">Delivery: Specialist bakery and cold-chain ordering engine enforcing strict slot reservation capacities per store location.</div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Customer Loyalty</span>
+            <h3>Sparks Digital Loyalty & Personalized Offers</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Scan your Sparks card or mobile app every time you shop to unlock tailored personalized discounts, charity donations on your behalf, and chances to win your basket for free.</p>
+            <div style="font-size:0.8rem; color:#0f172a; font-weight:600;">Delivery: Machine learning recommendation engines on Google Cloud Platform analyzing purchasing histories to serve hyper-personalized offer tokens.</div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- PAGE 2: ABOUT -->
+    <section id="page-about" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">About Marks and Spencer Group plc</h2>
+      <p style="color:#64748b; margin-bottom:2rem;">Statutory constitution, public governance, and digital accessibility compliance.</p>
+
+      <div class="card" style="margin-bottom:1.5rem;">
+        <h3>Constitution & Regulatory Mandate</h3>
+        <p style="margin-bottom:1rem;">Board of Directors, Marks and Spencer Group plc, regulated by the Financial Conduct Authority (FCA for M&S Bank)</p>
+        <div style="background:#f8fafc; padding:1rem; border-radius:0.5rem;">
+          <strong>Regulated by:</strong> Competition and Markets Authority (CMA), Advertising Standards Authority (ASA) & Information Commissioner’s Office (ICO)<br>
+          <strong>Operational Sector:</strong> UK Retail, Food, Clothing, Home & Financial Services<br>
+          <strong>Head Office:</strong> Waterside House, 35 North Wharf Road, London W2 1NW
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>WCAG 2.2 Level AA & Equality Act 2010 Commitment</h3>
+        <p>All digital web services engineered by Marks & Spencer comply with UK accessibility regulations, ensuring screen reader compatibility, ARIA semantics, minimum 4.5:1 text contrast, and full keyboard navigability.</p>
+      </div>
+    </section>
+
+    <!-- PAGE 3: SERVICES -->
+    <section id="page-services" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">Digital Services Directory</h2>
+      <p style="color:#64748b; margin-bottom:2rem;">Full breakdown of online portals, API pipelines, and citizen services.</p>
+
+      <div class="card-grid">
+        
+          <div class="card">
+            <span class="badge">E-Commerce Retail</span>
+            <h3>Online Fashion & Homeware Shopping</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Shop thousands of lines across womenswear, menswear, lingerie, childrenswear, and home furnishings with comprehensive size guides, video catwalk clips, and real customer fit ratings.</p>
+            <div style="margin-bottom:0.5rem; font-size:0.8rem; color:#475569;">
+              <strong>Audience:</strong> UK retail shoppers and international delivery customers across 100+ markets.
+            </div>
+            <div style="font-size:0.8rem; background:#f1f5f9; padding:0.5rem; border-radius:0.375rem;">
+              <strong>Technical Delivery:</strong> Next.js / React micro-frontends backed by headless commerce APIs, image optimization edge workers, and dynamic inventory queries.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Foodhall & Catering</span>
+            <h3>M&S Food to Order & Entertaining Collection</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Order bespoke celebration cakes, party platters, holiday turkeys, and artisan cheese boards online for designated collection slots at your local M&S Foodhall.</p>
+            <div style="margin-bottom:0.5rem; font-size:0.8rem; color:#475569;">
+              <strong>Audience:</strong> Families celebrating weddings, birthdays, Christmas, and dinner parties.
+            </div>
+            <div style="font-size:0.8rem; background:#f1f5f9; padding:0.5rem; border-radius:0.375rem;">
+              <strong>Technical Delivery:</strong> Specialist bakery and cold-chain ordering engine enforcing strict slot reservation capacities per store location.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Customer Loyalty</span>
+            <h3>Sparks Digital Loyalty & Personalized Offers</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Scan your Sparks card or mobile app every time you shop to unlock tailored personalized discounts, charity donations on your behalf, and chances to win your basket for free.</p>
+            <div style="margin-bottom:0.5rem; font-size:0.8rem; color:#475569;">
+              <strong>Audience:</strong> Over 16 million registered Sparks members across the UK.
+            </div>
+            <div style="font-size:0.8rem; background:#f1f5f9; padding:0.5rem; border-radius:0.375rem;">
+              <strong>Technical Delivery:</strong> Machine learning recommendation engines on Google Cloud Platform analyzing purchasing histories to serve hyper-personalized offer tokens.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Omnichannel Services</span>
+            <h3>Free Next-Day Click & Collect & Store Stock Finder</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Order online by 8pm for free collection next day at any of 1,000+ M&S stores or local BP convenience outlets; check real-time aisle stock before visiting.</p>
+            <div style="margin-bottom:0.5rem; font-size:0.8rem; color:#475569;">
+              <strong>Audience:</strong> Busy high-street shoppers avoiding postal delivery wait times.
+            </div>
+            <div style="font-size:0.8rem; background:#f1f5f9; padding:0.5rem; border-radius:0.375rem;">
+              <strong>Technical Delivery:</strong> Distributed real-time stock lookup APIs querying SAP S/4HANA enterprise retail inventory databases in sub-100ms.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Post-Purchase Care</span>
+            <h3>Hassle-Free Returns & QR Code Drop-Off</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Generate instant paperless QR return codes to drop parcels at any M&S store, Post Office, or Royal Mail parcel locker with automated refunds issued to original payment methods.</p>
+            <div style="margin-bottom:0.5rem; font-size:0.8rem; color:#475569;">
+              <strong>Audience:</strong> Online customers needing size exchanges or refund processing.
+            </div>
+            <div style="font-size:0.8rem; background:#f1f5f9; padding:0.5rem; border-radius:0.375rem;">
+              <strong>Technical Delivery:</strong> Integration with Royal Mail returns API and automated reverse logistics warehouse tracking.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge">Banking & Financial</span>
+            <h3>M&S Bank & Financial Services Integration</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1rem;">Apply for M&S Credit Cards, Club Rewards, travel insurance, pet insurance, and foreign currency with direct bureau collection in store.</p>
+            <div style="margin-bottom:0.5rem; font-size:0.8rem; color:#475569;">
+              <strong>Audience:</strong> UK consumers seeking trusted financial products with Sparks points benefits.
+            </div>
+            <div style="font-size:0.8rem; background:#f1f5f9; padding:0.5rem; border-radius:0.375rem;">
+              <strong>Technical Delivery:</strong> Secure Financial Conduct Authority (FCA) compliant banking gateway with Open Banking API integration and biometric MFA.
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- PAGE 4: ARCHITECTURE -->
+    <section id="page-architecture" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">Web Architecture & Technology Stack</h2>
+      <p style="color:#64748b; margin-bottom:1rem;">BTEC Level 3 Computing technical specification of frontend, backend, APIs, and infrastructure.</p>
+
+      <div class="card" style="margin-bottom:2rem; background:#f8fafc;">
+        <h3>System Architecture Overview</h3>
+        <p style="margin-bottom:0.75rem;">Marks and Spencer operates a modern, MACH-compliant (Microservices, API-first, Cloud-native, Headless) e-commerce architecture. Having transitioned from legacy monoliths to a decoupled cloud ecosystem hosted on Microsoft Azure and Google Cloud Platform, the platform easily sustains Black Friday retail traffic surges exceeding 150,000 requests per minute.</p>
+        <div style="font-size:0.85rem; color:#475569;">
+          <strong>Data Pipeline:</strong> Customer Web/App -> Cloudflare Edge CDN & WAF -> Next.js SSR Frontend -> GraphQL Commerce Mesh -> Commercetools & Headless Microservices -> SAP S/4HANA Inventory & Azure Cosmos DB -> Stripe / Worldpay Tokenized Payment Engine.
+        </div>
+      </div>
+
+      <div class="card-grid">
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Semantic HTML5, Microdata Product Schema, WAI-ARIA 1.2</span>
+            <h3>HTML5 Semantic Elements & Retail Accessibility</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Product listing pages (PLP) and product detail pages (PDP) utilize semantic HTML (<article>, <figure>, <figcaption>, <fieldset>) to organize apparel options (size, color, length). Rich Schema.org microdata markup (Product, Offer, AggregateRating) allows search engines to display live stock availability, star ratings, and prices directly in Google search snippets.</p>
+            <div class="code-box"><div itemscope itemtype="https://schema.org/Product">
+  <h1 itemprop="name">Pure Cotton Oxford Shirt</h1>
+  <div itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+    <span itemprop="priceCurrency" content="GBP">£</span><span itemprop="price" content="35.00">35.00</span>
+    <link itemprop="availability" href="https://schema.org/InStock" />
+  </div>
+</div></div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Structured schema microdata boosts organic search click-through rates (CTR) and improves screen reader clarity for blind shoppers comparing dress sizes.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">CSS3, Modern CSS Grid, Aspect-Ratio Optimization, Fluid Typography</span>
+            <h3>Cascading Style Sheets (CSS3 & Modern Responsive Design)</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">CSS enforces the refined Marks & Spencer spruce green (#004F32) and stone palette. CSS Grid powers responsive product galleries with aspect-ratio: 3/4 rules to prevent Cumulative Layout Shift (CLS) as high-resolution fashion imagery streams over mobile networks.</p>
+            <div class="code-box">.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.product-image-wrap {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+}</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Zero layout shift preserves Core Web Vitals, ensuring images do not cause buttons to jump under the user’s finger during checkout.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">TypeScript, ES2022, React 19, Client-Side Cart State, LocalStorage Caching</span>
+            <h3>JavaScript & Interactive Shopping Basket Engine</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">JavaScript manages dynamic product filters (filter by color, fit, price), instant slide-out shopping baskets, and real-time inventory quantity increments. Client-side state persists uncompleted shopping baskets across browser sessions using encrypted local storage.</p>
+            <div class="code-box">// Add to basket with optimistic UI update
+function addToBasket(productId: string, size: string, price: number) {
+  updateLocalCartState({ productId, size, price, timestamp: Date.now() });
+  renderCartDrawer();
+  syncWithServerCartAPI(productId, size);
+}</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Optimistic UI updates update basket badge counts instantly before waiting for server confirmations, delivering a seamless retail experience.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">GraphQL Apollo Gateway, RESTful JSON APIs, Commercetools Microservices</span>
+            <h3>Headless E-Commerce APIs & GraphQL Mesh</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Rather than relying on an inflexible legacy monolithic e-commerce engine, M&S uses a headless GraphQL API mesh. The front-end queries only the exact data required for a specific view (e.g., thumbnail, title, price, size array), minimizing payload sizes over mobile connections.</p>
+            <div class="code-box">query GetProductDetails($sku: String!) {
+  product(sku: $sku) {
+    title
+    price
+    availableSizes
+    stockLevel
+    sparksBonusPoints
+  }
+}</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Decoupling frontend presentation from backend inventory services allows independent deployment cycles without whole-site downtime.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Amplience / Contentful Headless CMS, Dynamic Digital Asset Management (DAM)</span>
+            <h3>Headless Content Management System (CMS)</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Seasonal marketing campaigns (Autumn Fashion, Christmas Foodhall, Summer Dining) are authored inside an enterprise headless CMS. High-resolution campaign photography and video lookbooks are automatically converted into modern WebP and AVIF formats with responsive srcset variations.</p>
+            <div class="code-box">CMS Pipeline: Editorial Lookbook Published -> Automated WebP Compression -> Edge CDN Invalidation -> Dynamic Homepage Banner Activation.</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Modern image codecs (WebP/AVIF) reduce asset file sizes by up to 40% compared to legacy JPEGs, dramatically improving page load speeds.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Azure Cosmos DB, SAP S/4HANA Retail, Redis Enterprise Cluster</span>
+            <h3>Enterprise Inventory Database Systems</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Stock levels across all 1,000+ UK stores and fulfillment warehouses are tracked in near-real-time. High-velocity transactional read models reside in Azure Cosmos DB and Redis caches, while core financial ledgers and purchase orders synchronize with SAP S/4HANA.</p>
+            <div class="code-box">SELECT store_id, quantity_available FROM store_inventory WHERE product_sku = 'T59/8402' AND store_id = 'LHR-T5' AND quantity_available > 0;</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: In-memory Redis caching allows 50,000 simultaneous shoppers to check whether a coat is in stock at their local Manchester or London branch simultaneously.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Microsoft Azure UK South & Google Cloud Platform (GCP), Kubernetes (AKS)</span>
+            <h3>Cloud Infrastructure & High-Elasticity Hosting</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">M&S operates across multi-cloud environments, utilizing Azure for core commerce microservices and GCP for Sparks Big Data machine learning. Kubernetes clusters auto-scale dynamically to absorb massive promotional rushes during Black Friday and seasonal clearance sales.</p>
+            <div class="code-box">HorizontalPodAutoscaler (AKS): Metrics: HTTP request rate > 200 req/sec per pod -> Trigger scale out +50 pods.</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Automated horizontal pod scaling scales from 30 containers to 450 containers within 120 seconds during flash sale notifications.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Cloudflare Enterprise CDN, Anycast Edge Routing, Cloudflare Workers</span>
+            <h3>Content Delivery Network (CDN) & Edge Computing</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Cloudflare edge servers distributed across the British Isles cache static product photography, CSS stylesheets, and JavaScript bundles. Edge Workers execute geolocation logic to show nearby store pickup availability before the request reaches the central cloud origin.</p>
+            <div class="code-box">Cache-Control: public, max-age=604800, immutable
+X-Edge-Cache: HIT-MANCHESTER</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Serving 94% of product image requests from edge cache memory slashes origin server bandwidth costs and accelerates load times.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">TLS 1.3, Strict Transport Security (HSTS), Apple Pay / Google Pay, Tokenized Vaults</span>
+            <h3>HTTPS, TLS 1.3 & Payment Security (PCI-DSS)</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">All checkout interactions are enforced over TLS 1.3 encryption. Credit card numbers, CVV security codes, and billing addresses are tokenized directly through certified PCI-DSS Level 1 payment processors, ensuring no raw financial details touch M&S application servers.</p>
+            <div class="code-box">Content-Security-Policy: default-src 'self'; script-src 'self' https://js.stripe.com https://applepay.cdn-apple.com; frame-src https://secure.checkout.marksandspencer.com;</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Tokenization protects consumer credit cards from being compromised even in the hypothetical event of a database dump.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">OAuth 2.0, OpenID Connect (OIDC), Biometric WebAuthn Passkeys, JWT</span>
+            <h3>Authentication & Sparks Customer Identity</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Customers sign in to access their Sparks digital card, order history, and saved payment methods. The identity platform supports modern passwordless WebAuthn biometric logins (Touch ID / Face ID), significantly reducing password reset friction and cart abandonment.</p>
+            <div class="code-box">POST /api/v1/identity/passkey-verify
+{ "credentialId": "A8F9...2B", "authenticatorData": "...", "clientDataJSON": "..." }</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: WebAuthn passkeys are cryptographically immune to traditional phishing scams because the cryptographic private key never leaves the user’s physical phone.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Dynatrace, Datadog RUM, New Relic, Synthetic Checkout Probes</span>
+            <h3>Continuous Retail Telemetry & Funnel Monitoring</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Real-user monitoring (RUM) tracks every milestone of the digital retail funnel: Search -> Add to Basket -> Checkout -> Payment Success. If the conversion rate at the payment step drops by more than 0.5%, an automated alert pages the e-commerce duty manager.</p>
+            <div class="code-box">Alert Rule: CheckoutConversionRateDrop > 0.5% over 5m -> Dispatch PagerDuty incident to E-Commerce Operations.</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Synthetic checkout transactions run every 60 seconds using dummy test payment cards to verify that Worldpay and Apple Pay gateways are functioning.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge" style="background:#e0f2fe; color:#0369a1;">Active-Active Multi-Zone Replication, Automated Snapshot Vaulting, RTO/RPO</span>
+            <h3>Disaster Recovery & Redundant Multi-Zone Backups</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:0.75rem;">Order data is mirrored synchronously across isolated availability zones in the UK. In the event of a catastrophic regional failure, traffic automatically switches to secondary cloud data centres in seconds with zero loss of submitted customer orders.</p>
+            <div class="code-box">RTO: < 5 mins | RPO: 0 seconds (Synchronous geo-redundant database replication across Azure UK South and UK West).</div>
+            <div class="level3-note">
+              <strong>Level 3 Grading Criteria:</strong> Level 3 Assessment Note: Recovery Time Objective (RTO) is under 5 minutes; Recovery Point Objective (RPO) is zero lost transactions for payment orders.
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- PAGE 5: SECURITY & RISKS -->
+    <section id="page-security" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">Cybersecurity Risk Assessment & UK Legal Acts</h2>
+      <p style="color:#64748b; margin-bottom:1rem;">Threat modeling, attack vectors, defensive mitigations, and compliance statutes.</p>
+
+      <div class="card" style="margin-bottom:2rem;">
+        <h3>Regulatory Compliance Standards</h3>
+        <p style="margin-bottom:0.5rem;">As one of Britain’s largest retail e-commerce operations, Marks & Spencer is targeted by cybercriminals attempting customer account takeover, Sparks loyalty points theft, fraudulent refund schemes, payment card skimming, and counterfeit promotional voucher scams.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+          <span class="badge" style="background:#dcfce7; color:#166534;">UK General Data Protection Regulation (UK GDPR)</span><span class="badge" style="background:#dcfce7; color:#166534;">Data Protection Act 2018</span><span class="badge" style="background:#dcfce7; color:#166534;">PCI-DSS Level 1 Compliance (Payment Card Industry Security Standards)</span><span class="badge" style="background:#dcfce7; color:#166534;">Consumer Rights Act 2015</span><span class="badge" style="background:#dcfce7; color:#166534;">Cyber Essentials Plus Certification</span><span class="badge" style="background:#dcfce7; color:#166534;">ISO/IEC 27001 Information Security Management</span>
+        </div>
+      </div>
+
+      <div class="card-grid">
+        
+          <div class="card">
+            <span class="badge risk-critical">Severity: CRITICAL</span>
+            <h3>Fake Discount Voucher & Phishing Clone Websites</h3>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Attack Vector:</strong> Social media phishing ads, typo-squatted domains (e.g. marks-spencer-clearance-sale.co.uk), WhatsApp scam messages.</p>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Operational Impact:</strong> Scammers create social media ads and lookalike websites advertising "M&S 50% Off Everything Closing Down Clearance", duping unsuspecting customers into submitting credit card numbers on fraudulent clone portals.</p>
+            <div style="background:#f8fafc; padding:0.75rem; border-radius:0.375rem; font-size:0.85rem; margin-top:0.5rem; border-left:3px solid #10b981;">
+              <strong>Mitigation Strategy:</strong> Aggressive trademark monitoring and swift domain takedowns via BrandShield and NCSC, public social media alerts educating customers that authentic M&S offers only originate from marksandspencer.com, and strict DMARC p=reject email enforcement.
+            </div>
+            <div style="font-size:0.75rem; color:#64748b; margin-top:0.5rem;">
+              <strong>UK Legal Act:</strong> Fraud Act 2006 Section 2, Trademarks Act 1994.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge risk-high">Severity: HIGH</span>
+            <h3>Sparks Loyalty Account Takeover & Points Theft</h3>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Attack Vector:</strong> Automated credential stuffing utilizing stolen password databases from unrelated third-party breaches.</p>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Operational Impact:</strong> Criminal syndicates deploy automated credential stuffing to breach customer M&S accounts, draining accumulated Sparks reward vouchers or stored e-gift card balances.</p>
+            <div style="background:#f8fafc; padding:0.75rem; border-radius:0.375rem; font-size:0.85rem; margin-top:0.5rem; border-left:3px solid #10b981;">
+              <strong>Mitigation Strategy:</strong> Behavioral bot mitigation blocking automated login attempts, mandatory two-factor authentication for high-value gift card transactions, and integration with "Have I Been Pwned" to reject compromised passwords.
+            </div>
+            <div style="font-size:0.75rem; color:#64748b; margin-top:0.5rem;">
+              <strong>UK Legal Act:</strong> Computer Misuse Act 1990 Section 1, UK GDPR Article 32.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge risk-high">Severity: HIGH</span>
+            <h3>Cross-Site Scripting (XSS) & Digital Card Skimming</h3>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Attack Vector:</strong> Stored or reflected XSS vulnerabilities, compromised third-party analytics tag containers.</p>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Operational Impact:</strong> Malicious script injection into product review modules or third-party marketing tags could attempt to capture customer credit card numbers or address details during checkout.</p>
+            <div style="background:#f8fafc; padding:0.75rem; border-radius:0.375rem; font-size:0.85rem; margin-top:0.5rem; border-left:3px solid #10b981;">
+              <strong>Mitigation Strategy:</strong> Strict Content Security Policy (CSP) blocking unauthorized scripts, Subresource Integrity (SRI) on external libraries, and tokenized payment iframes isolated from parent page JavaScript.
+            </div>
+            <div style="font-size:0.75rem; color:#64748b; margin-top:0.5rem;">
+              <strong>UK Legal Act:</strong> PCI-DSS Requirement 6.4.3, Data Protection Act 2018.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge risk-high">Severity: HIGH</span>
+            <h3>Inaccurate Stock Information & Inventory Hoarding Bots</h3>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Attack Vector:</strong> Automated headless browser scripts executing rapid cart reservations.</p>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Operational Impact:</strong> Scalper botnets rapidly add limited-edition fashion or Christmas Foodhall items to shopping baskets without purchasing, falsely indicating items are "Out of Stock" to genuine retail customers and disrupting warehouse logistics.</p>
+            <div style="background:#f8fafc; padding:0.75rem; border-radius:0.375rem; font-size:0.85rem; margin-top:0.5rem; border-left:3px solid #10b981;">
+              <strong>Mitigation Strategy:</strong> Cloudflare Bot Management identifying non-human browser behavior, rate-limiting cart reservation endpoints, and imposing a 15-minute basket release timer for unpurchased items.
+            </div>
+            <div style="font-size:0.75rem; color:#64748b; margin-top:0.5rem;">
+              <strong>UK Legal Act:</strong> Computer Misuse Act 1990 Section 3, Consumer Protection from Unfair Trading Regulations 2008.
+            </div>
+          </div>
+        
+          <div class="card">
+            <span class="badge risk-high">Severity: HIGH</span>
+            <h3>Website Downtime During Black Friday & Peak Trading Hours</h3>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Attack Vector:</strong> Massive organic traffic spikes combined with opportunistic Layer 7 DDoS attacks.</p>
+            <p style="font-size:0.85rem; margin-bottom:0.5rem;"><strong>Operational Impact:</strong> Unplanned website outages on Cyber Monday or Christmas Eve can result in hundreds of thousands of pounds of lost retail revenue every hour and damage brand reputation.</p>
+            <div style="background:#f8fafc; padding:0.75rem; border-radius:0.375rem; font-size:0.85rem; margin-top:0.5rem; border-left:3px solid #10b981;">
+              <strong>Mitigation Strategy:</strong> Dynamic auto-scaling Kubernetes clusters, origin-shielding CDN caching, queue management waiting rooms during extreme demand, and multi-region disaster recovery failover.
+            </div>
+            <div style="font-size:0.75rem; color:#64748b; margin-top:0.5rem;">
+              <strong>UK Legal Act:</strong> Consumer Rights Act 2015.
+            </div>
+          </div>
+        
+      </div>
+
+      <div class="card" style="margin-top:2rem;">
+        <h3>NCSC 5-Stage Incident Response Protocol</h3>
+        <p style="font-size:0.9rem; color:#334155; line-height:1.7;">Marks and Spencer maintains a Computer Security Incident Response Team (CSIRT) operating 24/7/365. The incident response protocol establishes immediate threat containment, engages third-party forensic specialists within 1 hour, enforces mandatory credential revocations if user accounts are suspect, and complies strictly with the statutory 72-hour ICO notification threshold under UK GDPR.</p>
+      </div>
+    </section>
+
+    <!-- PAGE 6: REVIEWS -->
+    <section id="page-reviews" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">Verified Public Reviews & Citizen Feedback</h2>
+      <p style="color:#64748b; margin-bottom:2rem;">Representative feedback collected across UK digital channels.</p>
+
+      <div class="card-grid">
+        
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <span style="color:#eab308; font-size:1.1rem;">★★★★★</span>
+              <span style="font-size:0.75rem; color:#94a3b8;">12 September 2026</span>
+            </div>
+            <h3 style="font-size:1.05rem;">Click & collect was ready first thing the next morning</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:1rem;">"Ordered an autumn trench coat and cashmere jumper online at 7pm, and received a text by 9am the next morning saying it was ready for collection at my local store. Fitting rooms let me try it on before leaving. First class omnichannel service."</p>
+            <div style="font-size:0.8rem; color:#64748b; border-top:1px solid #f1f5f9; padding-top:0.5rem;">
+              <strong>Victoria Sterling</strong> (Regular Fashion & Homeware Customer) - Harrogate, North Yorkshire
+            </div>
+          </div>
+        
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <span style="color:#eab308; font-size:1.1rem;">★★★★★</span>
+              <span style="font-size:0.75rem; color:#94a3b8;">05 September 2026</span>
+            </div>
+            <h3 style="font-size:1.05rem;">Food to Order celebration platter was fresh and beautifully packed</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:1rem;">"Reserved a bespoke artisan cheese and charcuterie platter for our family anniversary. The booking process on the website allowed me to select a precise 30-minute collection window. Delicious quality as always."</p>
+            <div style="font-size:0.8rem; color:#64748b; border-top:1px solid #f1f5f9; padding-top:0.5rem;">
+              <strong>George Edwards</strong> (M&S Foodhall Enthusiast) - Chester, Cheshire
+            </div>
+          </div>
+        
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <span style="color:#eab308; font-size:1.1rem;">★★★★★</span>
+              <span style="font-size:0.75rem; color:#94a3b8;">28 August 2026</span>
+            </div>
+            <h3 style="font-size:1.05rem;">Personalized Sparks discounts tailored to my shopping habits</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:1rem;">"The mobile app and website sync seamlessly. I unlocked 20% off bakery items right when I needed them. The paperless returns via QR code at my local store made exchanging shoe sizes effortless."</p>
+            <div style="font-size:0.8rem; color:#64748b; border-top:1px solid #f1f5f9; padding-top:0.5rem;">
+              <strong>Nadia Hussain</strong> (Sparks Loyalty Member) - Southampton, Hampshire
+            </div>
+          </div>
+        
+          <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <span style="color:#eab308; font-size:1.1rem;">★★★★☆</span>
+              <span style="font-size:0.75rem; color:#94a3b8;">19 August 2026</span>
+            </div>
+            <h3 style="font-size:1.05rem;">Clear size guides and honest customer fit reviews</h3>
+            <p style="font-size:0.85rem; color:#475569; margin-bottom:1rem;">"Buying menswear online can be tricky for fit, but the detailed garment measurements and customer reviews stating "true to size" gave me confidence. Fast delivery and recyclable paper packaging."</p>
+            <div style="font-size:0.8rem; color:#64748b; border-top:1px solid #f1f5f9; padding-top:0.5rem;">
+              <strong>David MacIntyre</strong> (Online Shopper) - Glasgow, Scotland
+            </div>
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- PAGE 7: SITE MAP -->
+    <section id="page-sitemap" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">Information Architecture & Site Map</h2>
+      <p style="color:#64748b; margin-bottom:2rem;">Hierarchical page topology and route resolutions for Marks & Spencer.</p>
+
+      <div class="card">
+        <h3>Root Domain: https://marksandspencer.org.uk</h3>
+        <div style="margin-top:1.5rem; display:grid; gap:0.75rem;">
+          
+            <div style="background:#f8fafc; padding:0.75rem 1rem; border-radius:0.5rem; display:flex; justify-content:space-between; align-items:center; border:1px solid #e2e8f0;">
+              <div>
+                <strong>M&S Home Portal</strong>
+                <div style="font-size:0.75rem; color:#64748b;">/?org=marksandspencer&page=home &bull; Main retail portal featuring womenswear, menswear, M&S Foodhall highlights, Sparks rewards, and click & collect locator.</div>
+              </div>
+              <span class="badge" style="background:#dcfce7; color:#166534;">HTTP 200 OK</span>
+            </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 8: USER FLOW -->
+    <section id="page-userflow" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">User Flow Architecture: Online Fashion Product Search, Sparks Discount & Click & Collect Flow</h2>
+      <p style="color:#64748b; margin-bottom:2rem;">Objective: Map the complete customer journey of an online shopper browsing autumn clothing, checking real-time store stock for click & collect, redeeming a Sparks loyalty voucher, and completing secure tokenized payment.</p>
+
+      <div class="card" style="padding:2rem;">
+        
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:1.1rem;">Customer Browses Fashion & Applies Faceted Filters</h3>
+              <span class="badge">User</span>
+            </div>
+            <p style="font-size:0.9rem; color:#334155; margin:0.5rem 0;"><strong>Action:</strong> Navigates to marksandspencer.com, filters womenswear by "Pure Cotton", Size "12", and Colour "Navy".</p>
+            <div style="background:#f1f5f9; padding:0.6rem; border-radius:0.375rem; font-size:0.8rem; color:#475569;">
+              <strong>Technical Execution:</strong> Frontend calls GraphQL product catalogue API with faceted filter parameters, returning matching SKUs with thumbnail images.
+            </div>
+            
+          </div>
+        
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:1.1rem;">Real-Time Store Inventory Lookup for Click & Collect</h3>
+              <span class="badge">Client Frontend</span>
+            </div>
+            <p style="font-size:0.9rem; color:#334155; margin:0.5rem 0;"><strong>Action:</strong> Customer enters postcode "M1 1AD" to check local store collection availability.</p>
+            <div style="background:#f1f5f9; padding:0.6rem; border-radius:0.375rem; font-size:0.8rem; color:#475569;">
+              <strong>Technical Execution:</strong> Calls SAP S/4HANA stock API via Redis cache layer; confirms item is eligible for Free Next-Day Click & Collect at Manchester Market Street store.
+            </div>
+            
+          </div>
+        
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:1.1rem;">Item Added to Basket & Cart State Updated</h3>
+              <span class="badge">Client Frontend</span>
+            </div>
+            <p style="font-size:0.9rem; color:#334155; margin:0.5rem 0;"><strong>Action:</strong> Clicks "Add to Bag" for Pure Cotton Navy Trench Coat (£79.00).</p>
+            <div style="background:#f1f5f9; padding:0.6rem; border-radius:0.375rem; font-size:0.8rem; color:#475569;">
+              <strong>Technical Execution:</strong> Client-side cart state updates optimistically; sends encrypted asynchronous POST to /api/cart/items to lock warehouse inventory for 15 minutes.
+            </div>
+            
+          </div>
+        
+          <div class="step-card">
+            <div class="step-number">4</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:1.1rem;">Customer Authentication & Sparks Voucher Application</h3>
+              <span class="badge">Backend Service</span>
+            </div>
+            <p style="font-size:0.9rem; color:#334155; margin:0.5rem 0;"><strong>Action:</strong> Customer signs in with Sparks account using biometric WebAuthn or password.</p>
+            <div style="background:#f1f5f9; padding:0.6rem; border-radius:0.375rem; font-size:0.8rem; color:#475569;">
+              <strong>Technical Execution:</strong> Server retrieves valid Sparks discount token (20% off outerwear) and recalculates order subtotal to £63.20.
+            </div>
+            
+          </div>
+        
+          <div class="step-card">
+            <div class="step-number">5</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:1.1rem;">PCI-DSS Tokenized Checkout & Apple Pay / Card Processing</h3>
+              <span class="badge">Database / External</span>
+            </div>
+            <p style="font-size:0.9rem; color:#334155; margin:0.5rem 0;"><strong>Action:</strong> Customer authorizes payment via Apple Pay or tokenized card iframe.</p>
+            <div style="background:#f1f5f9; padding:0.6rem; border-radius:0.375rem; font-size:0.8rem; color:#475569;">
+              <strong>Technical Execution:</strong> Payment token dispatched to Stripe/Worldpay gateway with 3D Secure 2.0 authorization; zero cardholder data touches M&S servers.
+            </div>
+            <div style="font-size:0.75rem; color:#b91c1c; margin-top:0.25rem;"><strong>Exception Handling:</strong> If card authorization fails, customer is prompted to retry with an alternate card or PayPal.</div>
+          </div>
+        
+          <div class="step-card">
+            <div class="step-number">6</div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h3 style="font-size:1.1rem;">Order Confirmation & Click & Collect QR Code Generated</h3>
+              <span class="badge">Backend Service</span>
+            </div>
+            <p style="font-size:0.9rem; color:#334155; margin:0.5rem 0;"><strong>Action:</strong> Generates order confirmation number (e.g. MS-UK-8492019) and dispatches collection barcode to customer email and app.</p>
+            <div style="background:#f1f5f9; padding:0.6rem; border-radius:0.375rem; font-size:0.8rem; color:#475569;">
+              <strong>Technical Execution:</strong> Order pushed to Castle Donington fulfillment warehouse management system (WMS) for overnight store dispatch.
+            </div>
+            
+          </div>
+        
+      </div>
+    </section>
+
+    <!-- PAGE 9: CONTACT -->
+    <section id="page-contact" class="page-section">
+      <h2 style="font-size:1.75rem; margin-bottom:0.5rem;">Contact & Public Enquiry Switchboard</h2>
+      <p style="color:#64748b; margin-bottom:2rem;">Official correspondence channels and interactive contact ticketing.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem;">
+        <div class="card">
+          <h3>Interactive Web Enquiry</h3>
+          <form onsubmit="handleContactSubmit(event)">
+            <label style="font-size:0.85rem; font-weight:600;">Full Name</label>
+            <input type="text" id="contact-name" placeholder="e.g. Jane Doe" required>
+
+            <label style="font-size:0.85rem; font-weight:600;">Email Address</label>
+            <input type="email" id="contact-email" placeholder="e.g. jane.doe@example.co.uk" required>
+
+            <label style="font-size:0.85rem; font-weight:600;">Department</label>
+            <select id="contact-dept">
+              <option value="Online Order Tracking & Delivery Queries">Online Order Tracking & Delivery Queries</option><option value="Sparks Loyalty & Account Management">Sparks Loyalty & Account Management</option><option value="Food to Order & Festive Catering Desk">Food to Order & Festive Catering Desk</option><option value="Store Click & Collect Support">Store Click & Collect Support</option><option value="Hassle-Free Returns & Refund Team">Hassle-Free Returns & Refund Team</option><option value="Corporate Sustainability & Plan A Enquiries">Corporate Sustainability & Plan A Enquiries</option>
+            </select>
+
+            <label style="font-size:0.85rem; font-weight:600;">Message Enquiry</label>
+            <textarea id="contact-msg" rows="4" placeholder="Type your enquiry..." required></textarea>
+
+            <button type="submit" class="btn" style="width:100%;">Submit Official Enquiry</button>
+          </form>
+          <div id="contact-result" style="display:none; margin-top:1rem; padding:0.75rem; background:#dcfce7; color:#166534; border-radius:0.375rem; font-size:0.85rem;"></div>
+        </div>
+
+        <div class="card">
+          <h3>Official Directory Coordinates</h3>
+          <div style="margin-bottom:1rem; font-size:0.9rem;">
+            <strong>Headquarters Address:</strong><br>
+            Marks and Spencer Customer Services, Waterside House, 35 North Wharf Road, London W2 1NW, United Kingdom
+          </div>
+          <div style="margin-bottom:1rem; font-size:0.9rem;">
+            <strong>Telephone Switchboard:</strong><br>
+            0333 014 8555 (UK Online Order Enquiries)
+          </div>
+          
+            <div style="margin-bottom:1rem; font-size:0.9rem; color:#b91c1c;">
+              <strong>Emergency Line:</strong><br>
+              0333 014 8777 (Store Emergencies & Food Safety)
+            </div>
+          
+          <div style="margin-bottom:1rem; font-size:0.9rem;">
+            <strong>Enquiry Email:</strong><br>
+            customer.services@marks-and-spencer.com
+          </div>
+          <div style="font-size:0.9rem;">
+            <strong>Operational Hours:</strong><br>
+            Monday to Friday: 08:00 – 20:00, Saturday & Sunday: 09:00 – 18:00
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div>
+        <strong style="color:white; font-size:1rem;">Marks and Spencer Group plc</strong>
+        <p style="margin-top:0.5rem; max-width:400px;">Quality, Value, Service, Innovation and Trust Since 1884</p>
+        <p style="font-size:0.75rem; margin-top:0.5rem;">Regulated under: Competition and Markets Authority (CMA), Advertising Standards Authority (ASA) & Information Commissioner’s Office (ICO)</p>
+      </div>
+      <div>
+        <strong style="color:white;">Specification Details</strong>
+        <p style="margin-top:0.5rem;">Unit: Web Development & Architecture</p>
+        <p>Level: UK Level 3 BTEC / Applied General</p>
+        <p>Standards: WCAG 2.2 AA &bull; UK GDPR &bull; TLS 1.3</p>
+      </div>
+    </div>
+    <div style="max-width:1200px; margin:2rem auto 0; padding-top:1.5rem; border-top:1px solid #1e293b; text-align:center; font-size:0.75rem;">
+      &copy; 2026 Marks and Spencer Group plc. Single-File Offline Web Specification. Open in any browser without web servers.
+    </div>
+  </footer>
+
+  <script>
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('#nav button').forEach(btn => btn.classList.remove('active'));
+      
+      const targetSec = document.getElementById('page-' + pageId);
+      if (targetSec) targetSec.classList.add('active');
+
+      const buttons = document.querySelectorAll('#nav button');
+      buttons.forEach(btn => {
+        if (btn.getAttribute('onclick').includes("'" + pageId + "'")) {
+          btn.classList.add('active');
+        }
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contact-name').value;
+      const dept = document.getElementById('contact-dept').value;
+      const refCode = 'MARKSANDSPENCER-' + Math.floor(100000 + Math.random() * 900000);
+      const res = document.getElementById('contact-result');
+      res.style.display = 'block';
+      res.innerHTML = '<strong>Enquiry Logged!</strong> Thank you ' + name + '. Reference: <code>' + refCode + '</code> routed to ' + dept + '. An automated receipt has been simulated.';
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
